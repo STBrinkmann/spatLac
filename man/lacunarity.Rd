@@ -28,7 +28,8 @@ r can also be character, refering to a folder. In that case all files in the fol
 \item{ncores}{numeric; The number of cores to use}
 }
 \value{
-\code{\link[tibble]{tibble}} containing all Lacunarity values
+\code{\link[tibble]{tibble}} containing all Lacunarity values: \code{name} and \code{i} refer to the name and index of the raster input.
+\code{r} is the box diameter (a 5X5 box has a diameter of 5 with a radius of 2). \code{lac} indicates the Lacunarity value.
 }
 \description{
 Computes the Lacunarity of a Spatial Raster object or a list of Spatial Raster objects.

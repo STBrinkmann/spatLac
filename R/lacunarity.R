@@ -14,7 +14,8 @@
 #' \href{https://doi.org/10.1016/j.ecocom.2011.01.001}{Hoechstetter et al. 2011} further applyed this algorithm on continuous raster images.
 #' If \code{r} is a binary raster (e.g. Land Use) Lacunarity is beening calculated using the Plotnicks algorithm.
 #'
-#' @return \code{\link[tibble]{tibble}} containing all Lacunarity values
+#' @return \code{\link[tibble]{tibble}} containing all Lacunarity values: \code{name} and \code{i} refer to the name and index of the raster input.
+#' \code{r} is the box diameter (a 5X5 box has a diameter of 5 with a radius of 2). \code{lac} indicates the Lacunarity value. 
 #' @export
 #'
 #' @examples
