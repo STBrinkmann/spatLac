@@ -134,11 +134,11 @@ can now be computed as (Eq. 5):
 
 ![
 \\begin{align\*}
-  \\Lambda(r) = \\cfrac{Z(2)}{Z^2(1)} && \\text{(46}
+  \\Lambda(r) = \\cfrac{Z(2)}{Z^2(1)} && \\text{(5)}
 \\end{align\*}
-](https://latex.codecogs.com/svg.latex?%0A%5Cbegin%7Balign%2A%7D%0A%20%20%5CLambda%28r%29%20%3D%20%5Ccfrac%7BZ%282%29%7D%7BZ%5E2%281%29%7D%20%26%26%20%5Ctext%7B%2846%7D%0A%5Cend%7Balign%2A%7D%0A "
+](https://latex.codecogs.com/svg.latex?%0A%5Cbegin%7Balign%2A%7D%0A%20%20%5CLambda%28r%29%20%3D%20%5Ccfrac%7BZ%282%29%7D%7BZ%5E2%281%29%7D%20%26%26%20%5Ctext%7B%285%29%7D%0A%5Cend%7Balign%2A%7D%0A "
 \begin{align*}
-  \Lambda(r) = \cfrac{Z(2)}{Z^2(1)} && \text{(46}
+  \Lambda(r) = \cfrac{Z(2)}{Z^2(1)} && \text{(5)}
 \end{align*}
 ")
 
@@ -180,6 +180,14 @@ sample_lac <- lacunarity(r = sample_rast, plot = TRUE)
 ```
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+
+To compute Lacunarity for a larger study, it can be computed for all
+raster objects (ending with .tif) in a folder. Furthermore, individual
+and summary plots can be automatically created, too.
+
+``` r
+lacunarity(r = "folder_path_with_TIF_files", save_plot = "folder_path_to_save_plots")
+```
 
 ## About
 
