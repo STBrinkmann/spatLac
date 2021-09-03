@@ -9,7 +9,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "sebastian.brinkmann@fau.de",
            comment = c(ORCID = "0000-0001-9835-7347"))
-Description: R package for computing Lacunarity for Spatial Raster
+Description: Lacunarity can be used as a scale depended meassure of heterogenety for images. This R package provides functions for computing Lacunarity for Spatial Raster objects.
 License: MIT + file LICENSE
 Encoding: UTF-8
 URL: https://github.com/STBrinkmann/spatLac
@@ -24,3 +24,8 @@ LinkingTo:
     Rcpp,
     RcppProgress
 RoxygenNote: 7.1.1
+Suggests: 
+    usethis,
+    scales
+Depends: 
+    R (>= 2.10)
