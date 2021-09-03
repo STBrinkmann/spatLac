@@ -61,7 +61,8 @@ $$
 \end{align*}
 $$
 Next, the box mass $S$ for each box of size $r$ is beeing calculated by taking the box sum, or the range of all box-values, for binary or continuous raster, respectively.
-For binary images, the number of boxes of size $r$ containing box mass $S$ are counted as $n[S,r]$, and converted into a probability distribution $Q(S,r)$ by dividing by $N[r]$ (Eq. 2):
+
+For **binary** images, the number of boxes of size $r$ containing box mass $S$ are counted as $n[S,r]$, and converted into a probability distribution $Q(S,r)$ by dividing by $N[r]$ (Eq. 2):
 $$
 \begin{align*}
   Q(S,r) = \cfrac{n[S,r]}{N[r]} && \text{(2)}
@@ -70,7 +71,7 @@ $$
 Next, the first and second moments of this probability distribution are estimated using Eq. (3), (4) respectively:
 $$
 \begin{align*}
-  Z(1) = \sum{S(r)\times Q(S,r)} && \text{(3)}
+  Z(1) = \sum{S(r)\times Q(S,r)} && \text{ (3)}
 \end{align*}
 $$
 $$
@@ -81,12 +82,12 @@ $$
 Lacunarity $\Lambda(r)$ can now be computed as (Eq. 5):
 $$
 \begin{align*}
-  \Lambda(r) = \cfrac{Z(2)}{Z^2(1)}
+  \Lambda(r) = \cfrac{Z(2)}{Z^2(1)} && \text{(46}
 \end{align*}
 $$
 
 
-If the raster is continuous the first and second moment can be expressed as the mean $E[S(r)]$ and variance $Var[S(r)]$ of the box mass values, respectively. Lacunarity can now be derived as (Eg. 6):
+If the raster is **continuous** the first and second moment can be expressed as the mean $E[S(r)]$ and variance $Var[S(r)]$ of the box mass values, respectively. Lacunarity can now be derived as (Eg. 6):
 $$
 \begin{align*}
   \Lambda(r) = 1 + \cfrac{Var[S(r)]}{E^2[S(r)]} && \text{(6)}

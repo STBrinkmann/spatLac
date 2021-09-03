@@ -84,10 +84,11 @@ described as (Eq. 1):
 Next, the box mass ![S](https://latex.codecogs.com/svg.latex?S "S") for
 each box of size ![r](https://latex.codecogs.com/svg.latex?r "r") is
 beeing calculated by taking the box sum, or the range of all box-values,
-for binary or continuous raster, respectively. For binary images, the
-number of boxes of size ![r](https://latex.codecogs.com/svg.latex?r "r")
-containing box mass ![S](https://latex.codecogs.com/svg.latex?S "S") are
-counted as
+for binary or continuous raster, respectively.
+
+For **binary** images, the number of boxes of size
+![r](https://latex.codecogs.com/svg.latex?r "r") containing box mass
+![S](https://latex.codecogs.com/svg.latex?S "S") are counted as
 ![n\[S,r\]](https://latex.codecogs.com/svg.latex?n%5BS%2Cr%5D "n[S,r]"),
 and converted into a probability distribution
 ![Q(S,r)](https://latex.codecogs.com/svg.latex?Q%28S%2Cr%29 "Q(S,r)") by
@@ -109,11 +110,11 @@ estimated using Eq. (3), (4) respectively:
 
 ![
 \\begin{align\*}
-  Z(1) = \\sum{S(r)\\times Q(S,r)} && \\text{(3)}
+  Z(1) = \\sum{S(r)\\times Q(S,r)} && \\text{ (3)}
 \\end{align\*}
-](https://latex.codecogs.com/svg.latex?%0A%5Cbegin%7Balign%2A%7D%0A%20%20Z%281%29%20%3D%20%5Csum%7BS%28r%29%5Ctimes%20Q%28S%2Cr%29%7D%20%26%26%20%5Ctext%7B%283%29%7D%0A%5Cend%7Balign%2A%7D%0A "
+](https://latex.codecogs.com/svg.latex?%0A%5Cbegin%7Balign%2A%7D%0A%20%20Z%281%29%20%3D%20%5Csum%7BS%28r%29%5Ctimes%20Q%28S%2Cr%29%7D%20%26%26%20%5Ctext%7B%20%283%29%7D%0A%5Cend%7Balign%2A%7D%0A "
 \begin{align*}
-  Z(1) = \sum{S(r)\times Q(S,r)} && \text{(3)}
+  Z(1) = \sum{S(r)\times Q(S,r)} && \text{ (3)}
 \end{align*}
 ")
 
@@ -133,16 +134,16 @@ can now be computed as (Eq. 5):
 
 ![
 \\begin{align\*}
-  \\Lambda(r) = \\cfrac{Z(2)}{Z^2(1)}
+  \\Lambda(r) = \\cfrac{Z(2)}{Z^2(1)} && \\text{(46}
 \\end{align\*}
-](https://latex.codecogs.com/svg.latex?%0A%5Cbegin%7Balign%2A%7D%0A%20%20%5CLambda%28r%29%20%3D%20%5Ccfrac%7BZ%282%29%7D%7BZ%5E2%281%29%7D%0A%5Cend%7Balign%2A%7D%0A "
+](https://latex.codecogs.com/svg.latex?%0A%5Cbegin%7Balign%2A%7D%0A%20%20%5CLambda%28r%29%20%3D%20%5Ccfrac%7BZ%282%29%7D%7BZ%5E2%281%29%7D%20%26%26%20%5Ctext%7B%2846%7D%0A%5Cend%7Balign%2A%7D%0A "
 \begin{align*}
-  \Lambda(r) = \cfrac{Z(2)}{Z^2(1)}
+  \Lambda(r) = \cfrac{Z(2)}{Z^2(1)} && \text{(46}
 \end{align*}
 ")
 
-If the raster is continuous the first and second moment can be expressed
-as the mean
+If the raster is **continuous** the first and second moment can be
+expressed as the mean
 ![E\[S(r)\]](https://latex.codecogs.com/svg.latex?E%5BS%28r%29%5D "E[S(r)]")
 and variance
 ![Var\[S(r)\]](https://latex.codecogs.com/svg.latex?Var%5BS%28r%29%5D "Var[S(r)]")
