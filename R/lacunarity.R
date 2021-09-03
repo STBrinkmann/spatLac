@@ -14,7 +14,7 @@
 #' \href{https://doi.org/10.1016/j.ecocom.2011.01.001}{Hoechstetter et al. 2011} further applyed this algorithm on continuous raster images.
 #' If \code{r} is a binary raster (e.g. Land Use) Lacunarity is beening calculated using the Plotnicks algorithm.
 #'
-#' @return \code{\link[dplyr]{tibble}} containing all Lacunarity values
+#' @return \code{\link[tibble]{tibble}} containing all Lacunarity values
 #' @export
 #'
 #' @examples
@@ -45,6 +45,7 @@
 #' @importFrom dplyr arrange
 #' @importFrom terra unique
 #' @importFrom terra as.matrix
+#' @importFrom terra nlyr
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 aes
 #' @importFrom ggplot2 geom_line
@@ -65,6 +66,20 @@ lacunarity <- function(r, box = "SQUARE", plot = FALSE, save_plot = FALSE, progr
     if (!all((lapply(r, class) == "SpatRaster"))) {
       stop("all elements of r must  be SpatRaster objects. Make sure to use the terra package for loading raster images.")
     }
+    
+    r_list <- list()
+    for (i in seq_along(r)) {
+      rr <- r[[i]]
+      if (terra::nlyr(rr) > 1) {
+        for (j in 1:terra::nlyr(rr)) {
+          r_list[[length(r_list)+1]] <- rr[[j]]
+        }
+      } else {
+        r_list[[length(r_list)+1]] <- rr
+      }
+    }
+    
+    r <- r_list
   } else if (is.character(r)) {
     r_paths <- list.files(path = r, pattern = "\\.tif$", full.names = TRUE)
     
@@ -72,6 +87,14 @@ lacunarity <- function(r, box = "SQUARE", plot = FALSE, save_plot = FALSE, progr
       stop("No .tif files in folder path r.")
     } else {
       r <- lapply(r_paths, terra::rast)
+    }
+  } else if (class(r) == "SpatRaster") {
+    if (terra::nlyr(r) > 1) {
+      r_list <- list()
+      for (j in 1:terra::nlyr(r)) {
+        r_list[[length(r_list)+1]] <- r[[j]]
+      }
+      r <- r_list
     }
   } else {
     if (class(r) != "SpatRaster") {
@@ -185,7 +208,7 @@ lacunarity <- function(r, box = "SQUARE", plot = FALSE, save_plot = FALSE, progr
     }
     
     max_x <- ceiling(max(out$`ln(r)`, na.rm = TRUE))
-    max_y <- ceiling(max(out$`ln(Lac)`, na.rm = TRUE))
+    max_y <- round(max(out$`ln(Lac)`, na.rm = TRUE), 1)+0.1
     
     p <- ggplot2::ggplot(data = out,
                          mapping = ggplot2::aes(x = `ln(r)`,
@@ -223,7 +246,7 @@ lacunarity <- function(r, box = "SQUARE", plot = FALSE, save_plot = FALSE, progr
     }
     
     max_x <- ceiling(max(out$`ln(r)`, na.rm = TRUE))
-    max_y <- ceiling(max(out$`ln(Lac)`, na.rm = TRUE))
+    max_y <- round(max(out$`ln(Lac)`, na.rm = TRUE), 1)+0.1
     
     p <- ggplot2::ggplot(data = out,
                          mapping = ggplot2::aes(x = `ln(r)`,

@@ -14,7 +14,8 @@ lacunarity(
 )
 }
 \arguments{
-\item{r}{SpatRaster or list of SpatRaster objects; Raster image can be loaded with \code{\link[terra]{rast}}}
+\item{r}{SpatRaster or list of SpatRaster OR character; Raster image that can be loaded using \code{\link[terra]{rast}}.
+r can also be character, refering to a folder. In that case all files in the folder with the ending ".tif" will be used.}
 
 \item{box}{character; Either SQUARE for a square neighborhood window, or CIRCLE for a round neighborhood window}
 
@@ -27,7 +28,7 @@ lacunarity(
 \item{ncores}{numeric; The number of cores to use}
 }
 \value{
-\code{\link[dplyr]{tibble}} containing all Lacunarity values
+\code{\link[tibble]{tibble}} containing all Lacunarity values
 }
 \description{
 Computes the Lacunarity of a Spatial Raster object or a list of Spatial Raster objects.
