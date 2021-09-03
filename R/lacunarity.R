@@ -1,7 +1,8 @@
 #' Lacunarity
 #' @description Computes the Lacunarity of a Spatial Raster object or a list of Spatial Raster objects.
 #'
-#' @param r SpatRaster or list of SpatRaster objects; Raster image can be loaded with \code{\link[terra]{rast}}
+#' @param r SpatRaster or list of SpatRaster OR character; Raster image that can be loaded using \code{\link[terra]{rast}}.
+#' r can also be character, refering to a folder. In that case all files in the folder with the ending ".tif" will be used.
 #' @param box character; Either SQUARE for a square neighborhood window, or CIRCLE for a round neighborhood window
 #' @param plot logical; Should the summary Lacunarity figure, showing Lacunarity of all SpatRasters be printed?
 #' @param save_plot FALSE or folder path; If not FALSE, a folder path to save Lacunarity plots (see details)
@@ -63,6 +64,14 @@ lacunarity <- function(r, box = "SQUARE", plot = FALSE, save_plot = FALSE, progr
   if (class(r) == "list") {
     if (!all((lapply(r, class) == "SpatRaster"))) {
       stop("all elements of r must  be SpatRaster objects. Make sure to use the terra package for loading raster images.")
+    }
+  } else if (is.character(r)) {
+    r_paths <- list.files(path = r, pattern = "\\.tif$", full.names = TRUE)
+    
+    if (length(r_paths) < 0) {
+      stop("No .tif files in folder path r.")
+    } else {
+      r <- lapply(r_paths, terra::rast)
     }
   } else {
     if (class(r) != "SpatRaster") {
