@@ -4,11 +4,16 @@ Title: R package for computing Lacunarity for Spatial Raster
 Version: 1.0
 Date: 2021-09-03
 Authors@R: 
-    person(given = "Sebastian",
+    c(person(given = "Sebastian",
            family = "Brinkmann",
            role = c("aut", "cre"),
            email = "sebastian.brinkmann@fau.de",
-           comment = c(ORCID = "0000-0001-9835-7347"))
+           comment = c(ORCID = "0000-0001-9835-7347")),
+      person(given = "S.M.",
+           family = "Labib",
+           role = c("ctb"),
+           email = "sml80@medschl.cam.ac.uk",
+           comment = c(ORCID = "0000-0002-4127-2075")))
 Description: Lacunarity can be used as a scale depended meassure of heterogenety for images. This R package provides functions for computing Lacunarity for Spatial Raster objects.
 License: MIT + file LICENSE
 Encoding: UTF-8

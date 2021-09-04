@@ -7,9 +7,8 @@
 \author{
 \strong{Maintainer}: Sebastian Brinkmann \email{sebastian.brinkmann@fau.de} (\href{https://orcid.org/0000-0001-9835-7347}{ORCID})
 
-Authors:
+Contributor:
 \itemize{
-  \item Sebastian Brinkmann (\href{https://orcid.org/0000-0001-9835-7347}{ORCID})
   \item S.M. Labib (\href{https://orcid.org/0000-0002-4127-2075}{ORCID})
 }
 
