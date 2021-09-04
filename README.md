@@ -176,7 +176,7 @@ sample_rast <- rast("data_raw/hoechstetter.tif")
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
 
 ``` r
-sample_lac <- lacunarity(r = sample_rast, plot = TRUE)
+sample_lac <- lacunarity(x = sample_rast, plot = TRUE)
 ```
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
@@ -186,7 +186,7 @@ raster objects (ending with .tif) in a folder. Furthermore, individual
 and summary plots can be automatically created, too.
 
 ``` r
-lacunarity(r = "folder_path_with_TIF_files",
+lacunarity(x = "folder_path_with_TIF_files",
            save_plot = "folder_path_to_save_plots")
 ```
 

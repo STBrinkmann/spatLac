@@ -5,7 +5,7 @@
 \title{Lacunarity}
 \usage{
 lacunarity(
-  r,
+  x,
   box = "SQUARE",
   plot = FALSE,
   save_plot = FALSE,
@@ -14,8 +14,8 @@ lacunarity(
 )
 }
 \arguments{
-\item{r}{SpatRaster or list of SpatRaster OR character; Raster image that can be loaded using \code{\link[terra]{rast}}.
-r can also be character, refering to a folder. In that case all files in the folder with the ending ".tif" will be used.}
+\item{x}{SpatRaster or list of SpatRaster OR character; Raster image that can be loaded using \code{\link[terra]{rast}}.
+x can also be character, refering to a folder. In that case all files in the folder with the ending ".tif" will be used.}
 
 \item{box}{character; Either SQUARE for a square neighborhood window, or CIRCLE for a round neighborhood window}
 
@@ -29,7 +29,7 @@ r can also be character, refering to a folder. In that case all files in the fol
 }
 \value{
 \code{\link[tibble]{tibble}} containing all Lacunarity values: \code{name} and \code{i} refer to the name and index of the raster input.
-\code{r} is the box diameter (a 5X5 box has a diameter of 5 with a radius of 2). \code{lac} indicates the Lacunarity value.
+\code{x} is the box diameter (a 5X5 box has a diameter of 5 with a radius of 2). \code{lac} indicates the Lacunarity value.
 }
 \description{
 Computes the Lacunarity of a Spatial Raster object or a list of Spatial Raster objects.
@@ -37,7 +37,7 @@ Computes the Lacunarity of a Spatial Raster object or a list of Spatial Raster o
 \details{
 \code{lacunarity} is based on the algorithm for binary images provided by \href{https://doi.org/10.1007/BF00125351}{Plotnick et al. 1993}.
 \href{https://doi.org/10.1016/j.ecocom.2011.01.001}{Hoechstetter et al. 2011} further applyed this algorithm on continuous raster images.
-If \code{r} is a binary raster (e.g. Land Use) Lacunarity is beening calculated using the Plotnicks algorithm.
+If \code{x} is a binary raster (e.g. Land Use) Lacunarity is beening calculated using the Plotnicks algorithm.
 }
 \examples{
 # Create a SpatRast as input
@@ -56,8 +56,8 @@ mat_sample <- matrix(data = c(
    0,1,0,0,0,1,0,1,1,1,0,1
    ), nrow = 12, ncol = 12, byrow = TRUE
 )
-r <- terra::rast(mat_sample)
+x <- terra::rast(mat_sample)
 
-lacunarity(r)
+lacunarity(x)
 
 }

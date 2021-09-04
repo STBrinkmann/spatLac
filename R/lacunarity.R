@@ -1,8 +1,8 @@
 #' Lacunarity
 #' @description Computes the Lacunarity of a Spatial Raster object or a list of Spatial Raster objects.
 #'
-#' @param r SpatRaster or list of SpatRaster OR character; Raster image that can be loaded using \code{\link[terra]{rast}}.
-#' r can also be character, refering to a folder. In that case all files in the folder with the ending ".tif" will be used.
+#' @param x SpatRaster or list of SpatRaster OR character; Raster image that can be loaded using \code{\link[terra]{rast}}.
+#' x can also be character, refering to a folder. In that case all files in the folder with the ending ".tif" will be used.
 #' @param box character; Either SQUARE for a square neighborhood window, or CIRCLE for a round neighborhood window
 #' @param plot logical; Should the summary Lacunarity figure, showing Lacunarity of all SpatRasters be printed?
 #' @param save_plot FALSE or folder path; If not FALSE, a folder path to save Lacunarity plots (see details)
@@ -12,10 +12,10 @@
 #' @details
 #' \code{lacunarity} is based on the algorithm for binary images provided by \href{https://doi.org/10.1007/BF00125351}{Plotnick et al. 1993}.
 #' \href{https://doi.org/10.1016/j.ecocom.2011.01.001}{Hoechstetter et al. 2011} further applyed this algorithm on continuous raster images.
-#' If \code{r} is a binary raster (e.g. Land Use) Lacunarity is beening calculated using the Plotnicks algorithm.
+#' If \code{x} is a binary raster (e.g. Land Use) Lacunarity is beening calculated using the Plotnicks algorithm.
 #'
 #' @return \code{\link[tibble]{tibble}} containing all Lacunarity values: \code{name} and \code{i} refer to the name and index of the raster input.
-#' \code{r} is the box diameter (a 5X5 box has a diameter of 5 with a radius of 2). \code{lac} indicates the Lacunarity value. 
+#' \code{x} is the box diameter (a 5X5 box has a diameter of 5 with a radius of 2). \code{lac} indicates the Lacunarity value. 
 #' @export
 #'
 #' @examples
@@ -35,9 +35,9 @@
 #'    0,1,0,0,0,1,0,1,1,1,0,1
 #'    ), nrow = 12, ncol = 12, byrow = TRUE
 #' )
-#' r <- terra::rast(mat_sample)
+#' x <- terra::rast(mat_sample)
 #'
-#' lacunarity(r)
+#' lacunarity(x)
 #'
 #' @importFrom Rcpp sourceCpp
 #' @importFrom Rcpp evalCpp
@@ -59,18 +59,18 @@
 #' @importFrom ggplot2 ggsave
 #' @importFrom magrittr %>%
 #' @useDynLib spatLac, .registration = TRUE
-lacunarity <- function(r, box = "SQUARE", plot = FALSE, save_plot = FALSE, progress = FALSE, ncores = 1L) {
+lacunarity <- function(x, box = "SQUARE", plot = FALSE, save_plot = FALSE, progress = FALSE, ncores = 1L) {
   
   # 1. Check input ----------------------------------------------------------
-  # r
-  if (class(r) == "list") {
-    if (!all((lapply(r, class) == "SpatRaster"))) {
-      stop("all elements of r must  be SpatRaster objects. Make sure to use the terra package for loading raster images.")
+  # x
+  if (class(x) == "list") {
+    if (!all((lapply(x, class) == "SpatRaster"))) {
+      stop("all elements of x must  be SpatRaster objects. Make sure to use the terra package for loading raster images.")
     }
     
     r_list <- list()
-    for (i in seq_along(r)) {
-      rr <- r[[i]]
+    for (i in seq_along(x)) {
+      rr <- x[[i]]
       if (terra::nlyr(rr) > 1) {
         for (j in 1:terra::nlyr(rr)) {
           r_list[[length(r_list)+1]] <- rr[[j]]
@@ -80,26 +80,26 @@ lacunarity <- function(r, box = "SQUARE", plot = FALSE, save_plot = FALSE, progr
       }
     }
     
-    r <- r_list
-  } else if (is.character(r)) {
-    r_paths <- list.files(path = r, pattern = "\\.tif$", full.names = TRUE)
+    x <- r_list
+  } else if (is.character(x)) {
+    r_paths <- list.files(path = x, pattern = "\\.tif$", full.names = TRUE)
     
     if (length(r_paths) < 0) {
-      stop("No .tif files in folder path r.")
+      stop("No .tif files in folder path x.")
     } else {
-      r <- lapply(r_paths, terra::rast)
+      x <- lapply(r_paths, terra::rast)
     }
-  } else if (class(r) == "SpatRaster") {
-    if (terra::nlyr(r) > 1) {
+  } else if (class(x) == "SpatRaster") {
+    if (terra::nlyr(x) > 1) {
       r_list <- list()
-      for (j in 1:terra::nlyr(r)) {
-        r_list[[length(r_list)+1]] <- r[[j]]
+      for (j in 1:terra::nlyr(x)) {
+        r_list[[length(r_list)+1]] <- x[[j]]
       }
-      r <- r_list
+      x <- r_list
     }
   } else {
-    if (class(r) != "SpatRaster") {
-      stop("r must  be a SpatRaster object. Make sure to use the terra package for loading raster images.")
+    if (class(x) != "SpatRaster") {
+      stop("x must  be a SpatRaster object. Make sure to use the terra package for loading raster images.")
     }
   }
   
@@ -153,30 +153,30 @@ lacunarity <- function(r, box = "SQUARE", plot = FALSE, save_plot = FALSE, progr
     "ln(Lac)" = as.numeric()
   )
   
-  # Convert r to list
-  if(!is.list(r)) r <- list(r)
+  # Convert x to list
+  if(!is.list(x)) x <- list(x)
   
-  for (i in seq_along(r)) {
-    # Get current r
-    this_r <- r[[i]]
+  for (i in seq_along(x)) {
+    # Get current raster
+    this_x <- x[[i]]
     if (progress) {
-      cat(paste("Computing Lacunarity for", names(this_r)[1]))
+      cat(paste("Computing Lacunarity for", names(this_x)[1]))
       cat("\n")
     }
     
     # Calculate r vector from raster dimension
     max_r <- 1
-    while (2^(max_r+1)+1 < min(dim(this_r)[1:2])/2) {
+    while (2^(max_r+1)+1 < min(dim(this_x)[1:2])/2) {
       max_r <- max_r + 1
     }
     
-    r_vec <- c(2^(1:max_r)+1, floor(min(dim(this_r)[1:2])/2))
+    r_vec <- c(2^(1:max_r)+1, floor(min(dim(this_x)[1:2])/2))
     
     # Is r binary? (e.g. Greenspace raster)
-    lac_fun <- as.integer(nrow(terra::unique(this_r)) <= 2)
+    lac_fun <- as.integer(nrow(terra::unique(this_x)) <= 2)
     
     # Convert raster to matrix
-    rast_mat <- terra::as.matrix(this_r, wide = TRUE)
+    rast_mat <- terra::as.matrix(this_x, wide = TRUE)
     
     # Calculate Lacunarity for all w
     this_lac <- rcpp_lacunarity(mat = rast_mat,
@@ -187,7 +187,7 @@ lacunarity <- function(r, box = "SQUARE", plot = FALSE, save_plot = FALSE, progr
                                 display_progress = progress)
     
     this_out <- dplyr::tibble(
-      name = rep(names(this_r)[1], length(this_lac)),
+      name = rep(names(this_x)[1], length(this_lac)),
       i = i,
       r = r_vec,
       "ln(r)" = log(r_vec),
@@ -203,9 +203,9 @@ lacunarity <- function(r, box = "SQUARE", plot = FALSE, save_plot = FALSE, progr
   # Plot output of all r
   if (plot) {
     if (length(unique(out$name)) != length(unique(out$i))) {
-      r_names <- as.character(out$i)
+      x_names <- as.character(out$i)
     } else {
-      r_names <- as.character(out$name)
+      x_names <- as.character(out$name)
     }
     
     max_x <- ceiling(max(out$`ln(r)`, na.rm = TRUE))
@@ -214,7 +214,7 @@ lacunarity <- function(r, box = "SQUARE", plot = FALSE, save_plot = FALSE, progr
     p <- ggplot2::ggplot(data = out,
                          mapping = ggplot2::aes(x = `ln(r)`,
                                                 y = `ln(Lac)`,
-                                                colour = r_names),
+                                                colour = x_names),
                          environment = environment()) +
       ggplot2::geom_line(lwd = 0.8) +
       ggplot2::labs(x = "ln(r)",
@@ -241,9 +241,9 @@ lacunarity <- function(r, box = "SQUARE", plot = FALSE, save_plot = FALSE, progr
     
     # Save summary ggplot
     if (length(unique(out$name)) != length(unique(out$i))) {
-      r_names <- as.character(out$i)
+      x_names <- as.character(out$i)
     } else {
-      r_names <- as.character(out$name)
+      x_names <- as.character(out$name)
     }
     
     max_x <- ceiling(max(out$`ln(r)`, na.rm = TRUE))
@@ -252,7 +252,7 @@ lacunarity <- function(r, box = "SQUARE", plot = FALSE, save_plot = FALSE, progr
     p <- ggplot2::ggplot(data = out,
                          mapping = ggplot2::aes(x = `ln(r)`,
                                                 y = `ln(Lac)`,
-                                                colour = r_names),
+                                                colour = x_names),
                          environment = environment()) +
       ggplot2::geom_line(lwd = 0.8) +
       ggplot2::labs(x = "ln(r)", y = "ln(lacunarity)",
@@ -273,14 +273,14 @@ lacunarity <- function(r, box = "SQUARE", plot = FALSE, save_plot = FALSE, progr
                     width = 7, height = 6.5, units = "in", dpi = 500)
     
     # Save unique plots
-    if (length(r) > 1) {
-      for (i in seq_along(r)) {
+    if (length(x) > 1) {
+      for (i in seq_along(x)) {
         this_out <- out[out$i == i, ]
         
         if (length(unique(this_out$name)) != length(unique(this_out$i))) {
-          r_names <- as.character(this_out$i)
+          x_names <- as.character(this_out$i)
         } else {
-          r_names <- as.character(this_out$name)
+          x_names <- as.character(this_out$name)
         }
         
         max_x <- ceiling(max(this_out$`ln(r)`, na.rm = TRUE))
@@ -289,7 +289,7 @@ lacunarity <- function(r, box = "SQUARE", plot = FALSE, save_plot = FALSE, progr
         p <- ggplot2::ggplot(data = this_out,
                              mapping = ggplot2::aes(x = `ln(r)`,
                                                     y = `ln(Lac)`,
-                                                    colour = r_names),
+                                                    colour = x_names),
                              environment = environment()) +
           ggplot2::geom_line(lwd = 0.8) +
           ggplot2::labs(x = "ln(r)", y = "ln(lacunarity)",
