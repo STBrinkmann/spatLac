@@ -107,7 +107,7 @@ library(terra)
 
 sample_rast <- rast("data_raw/hoechstetter.tif")
 ```
-```{r echo=FALSE, fig.height=2, fig.width=6}
+```{r echo=FALSE, fig.height=2, fig.width=6, dpi=1200}
 plot(sample_rast, axes=FALSE, nr = 1)
 ```
 
@@ -143,4 +143,4 @@ Hoechstetter S., Walz U. and Thinh N.X. (2011): Adapting lacunarity techniques f
 
 Labib S.M., Lindley S. and Huck J.J. (2020): Scale effects in remotely sensed greenspace metrics and how to mitigate them for environmental health exposure assessment. *Computers, Environment and Urban Systems* 82. DOI: [10.1016/j.compenvurbsys.2020.101501](https://doi.org/10.1016/j.compenvurbsys.2020.101501).
 
-Plotnick, R.E., Gardner, R.H. & O'Neill, R.V. (1993): Lacunarity indices as measures of landscape texture. *Landscape Ecology* 8, pages 201–211. DOI: [10.1007/BF00125351](https://doi.org/10.1007/BF00125351)
+Plotnick R.E., Gardner R.H. and O'Neill R.V. (1993): Lacunarity indices as measures of landscape texture. *Landscape Ecology* 8, pages 201–211. DOI: [10.1007/BF00125351](https://doi.org/10.1007/BF00125351)

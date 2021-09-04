@@ -250,6 +250,6 @@ health exposure assessment. *Computers, Environment and Urban Systems*
 82. DOI:
 [10.1016/j.compenvurbsys.2020.101501](https://doi.org/10.1016/j.compenvurbsys.2020.101501).
 
-Plotnick, R.E., Gardner, R.H. & O’Neill, R.V. (1993): Lacunarity indices
+Plotnick R.E., Gardner R.H. and O’Neill R.V. (1993): Lacunarity indices
 as measures of landscape texture. *Landscape Ecology* 8, pages 201–211.
 DOI: [10.1007/BF00125351](https://doi.org/10.1007/BF00125351)
