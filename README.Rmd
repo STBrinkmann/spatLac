@@ -111,7 +111,7 @@ sample_rast <- rast("data_raw/hoechstetter.tif")
 plot(sample_rast, axes=FALSE, nr = 1)
 ```
 
-```{r fig.height=5, fig.width=6}
+```{r fig.height=5, fig.width=6, dev="svg"}
 sample_lac <- lacunarity(x = sample_rast, r_vec = 3:50, plot = TRUE)
 ```
 

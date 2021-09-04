@@ -189,7 +189,7 @@ sample_rast <- rast("data_raw/hoechstetter.tif")
 sample_lac <- lacunarity(x = sample_rast, r_vec = 3:50, plot = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-3-1.svg" width="100%" />
 
 To compute Lacunarity for a larger study, it can be computed for all
 raster objects (ending with .tif) in a folder. Furthermore, individual
