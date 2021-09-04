@@ -160,6 +160,16 @@ of the box mass values, respectively. Lacunarity can now be derived as
 \end{align*}
 ")
 
+![r](https://latex.codecogs.com/svg.latex?r "r") should not be greater
+than half of the shorter dimension of the input raster. If
+![r](https://latex.codecogs.com/svg.latex?r "r") is not provided by the
+user, it will be automatically generated as the function
+![r\_p = 2^p + 1](https://latex.codecogs.com/svg.latex?r_p%20%3D%202%5Ep%20%2B%201 "r_p = 2^p + 1"),
+where ![p](https://latex.codecogs.com/svg.latex?p "p") is a whole number
+commencing at 1 until
+![r\_p](https://latex.codecogs.com/svg.latex?r_p "r_p") reaches half of
+the shorter dimension.
+
 ## Examples
 
 For demonstration purposes I replicated the examples provided by
@@ -176,7 +186,7 @@ sample_rast <- rast("data_raw/hoechstetter.tif")
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
 
 ``` r
-sample_lac <- lacunarity(x = sample_rast, plot = TRUE)
+sample_lac <- lacunarity(x = sample_rast, r_vec = 3:50, plot = TRUE)
 ```
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
@@ -219,8 +229,9 @@ citation("spatLac")
 ### Package contributors
 
 Brinkmann, Sebastian (Creator and author) e-mail:
-<sebastian.brinkmann@fau.de> Dr. S.M. Labib (ROLE) e-mail:
-<sml80@medschl.cam.ac.uk>
+<sebastian.brinkmann@fau.de>
+
+Dr. S.M. Labib (ROLE) e-mail: <sml80@medschl.cam.ac.uk>
 
 ## Bibliography
 

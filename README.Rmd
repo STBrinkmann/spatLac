@@ -95,6 +95,8 @@ $$
 $$
 
 
+$r$ should not be greater than half of the shorter dimension of the input raster. If $r$ is not provided by the user, it will be automatically generated as the function $r_p = 2^p + 1$, where $p$ is a whole number commencing at 1 until $r_p$ reaches half of the shorter dimension. 
+
 ## Examples
 
 For demonstration purposes I replicated the examples provided by [Hoechstetter et al. (2011)](https://doi.org/10.1016/j.ecocom.2011.01.001).
@@ -110,7 +112,7 @@ plot(sample_rast, axes=FALSE, nr = 1)
 ```
 
 ```{r fig.height=5, fig.width=6}
-sample_lac <- lacunarity(x = sample_rast, plot = TRUE)
+sample_lac <- lacunarity(x = sample_rast, r_vec = 3:50, plot = TRUE)
 ```
 
 
@@ -131,6 +133,7 @@ citation("spatLac")
 
 ### Package contributors
 Brinkmann, Sebastian (Creator and author) e-mail: [sebastian.brinkmann\@fau.de](mailto:sebastian.brinkmann@fau.de)
+
 Dr. S.M. Labib (ROLE) e-mail: [sml80\@medschl.cam.ac.uk](mailto:sml80@medschl.cam.ac.uk)
 
 ## Bibliography
