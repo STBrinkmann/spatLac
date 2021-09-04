@@ -2,7 +2,9 @@
 #' @description Computes the Lacunarity of a Spatial Raster object or a list of Spatial Raster objects.
 #'
 #' @param x SpatRaster or list of SpatRaster OR character; Raster image that can be loaded using \code{\link[terra]{rast}}.
-#' x can also be character, refering to a folder. In that case all files in the folder with the ending ".tif" will be used.
+#' x can also be character, refering to a folder. In that case all files in the folder with the ending ".tif" will be used
+#' @param r_vec integer vector (optional); Vector of box diameter values. Every r must be odd and >2. It is recommended
+#' that no r value is greated than half of the shorter dimension of x. If r_vec is NULL (default), r_vec will be generated automatically 
 #' @param box character; Either SQUARE for a square neighborhood window, or CIRCLE for a round neighborhood window
 #' @param plot logical; Should the summary Lacunarity figure, showing Lacunarity of all SpatRasters be printed?
 #' @param save_plot FALSE or folder path; If not FALSE, a folder path to save Lacunarity plots (see details)
@@ -59,7 +61,7 @@
 #' @importFrom ggplot2 ggsave
 #' @importFrom magrittr %>%
 #' @useDynLib spatLac, .registration = TRUE
-lacunarity <- function(x, box = "SQUARE", plot = FALSE, save_plot = FALSE, progress = FALSE, ncores = 1L) {
+lacunarity <- function(x, r_vec = NULL, box = "SQUARE", plot = FALSE, save_plot = FALSE, progress = FALSE, ncores = 1L) {
   
   # 1. Check input ----------------------------------------------------------
   # x
@@ -99,7 +101,20 @@ lacunarity <- function(x, box = "SQUARE", plot = FALSE, save_plot = FALSE, progr
     }
   } else {
     if (class(x) != "SpatRaster") {
-      stop("x must  be a SpatRaster object. Make sure to use the terra package for loading raster images.")
+      stop("x must  be a SpatRaster object. Make sure to use the terra package for loading raster images")
+    }
+  }
+  
+  # r_vec
+  if (!is.null(r_vec)) {
+    r_vec[r_vec < 3] <- NA
+    r_vec <- as.integer(na.omit(r_vec))
+    invalid_r <- !(r_vec %% 2)
+    r_vec[invalid_r] <- 2*round(r_vec[invalid_r]/2)+1
+    r_vec <- as.integer(r_vec)
+    
+    if (length(r_vec) == 0) {
+      stop("The provided r_vec has length 0. Maybe add values >2")
     }
   }
   
@@ -137,7 +152,7 @@ lacunarity <- function(x, box = "SQUARE", plot = FALSE, save_plot = FALSE, progr
   if (!is.numeric(ncores)) {
     stop("ncores must be numeric")
   } else {
-    ncores <- ifelse(ncores<1, 1L, floor(ncores))
+    ncores <- ifelse(ncores<=1, 1L, floor(ncores))
   }
   
   
@@ -165,12 +180,16 @@ lacunarity <- function(x, box = "SQUARE", plot = FALSE, save_plot = FALSE, progr
     }
     
     # Calculate r vector from raster dimension
-    max_r <- 1
-    while (2^(max_r+1)+1 < min(dim(this_x)[1:2])/2) {
-      max_r <- max_r + 1
+    if (is.null(r_vec)) {
+      max_r <- 1
+      while (2^(max_r+1)+1 < round(min(dim(this_x)[1:2])/2)) {
+        max_r <- max_r + 1
+      }
+      
+      r_vec <- c(2^(1:max_r)+1, round(min(dim(this_x)[1:2])/4)*2+1)
     }
     
-    r_vec <- c(2^(1:max_r)+1, floor(min(dim(this_x)[1:2])/2))
+    
     
     # Is r binary? (e.g. Greenspace raster)
     lac_fun <- as.integer(nrow(terra::unique(this_x)) <= 2)

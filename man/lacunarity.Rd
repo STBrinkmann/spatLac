@@ -6,6 +6,7 @@
 \usage{
 lacunarity(
   x,
+  r_vec = NULL,
   box = "SQUARE",
   plot = FALSE,
   save_plot = FALSE,
@@ -15,7 +16,10 @@ lacunarity(
 }
 \arguments{
 \item{x}{SpatRaster or list of SpatRaster OR character; Raster image that can be loaded using \code{\link[terra]{rast}}.
-x can also be character, refering to a folder. In that case all files in the folder with the ending ".tif" will be used.}
+x can also be character, refering to a folder. In that case all files in the folder with the ending ".tif" will be used}
+
+\item{r_vec}{integer vector (optional); Vector of box diameter values. Every r must be odd and >2. It is recommended
+that no r value is greated than half of the shorter dimension of x. If r_vec is NULL (default), r_vec will be generated automatically}
 
 \item{box}{character; Either SQUARE for a square neighborhood window, or CIRCLE for a round neighborhood window}
 
