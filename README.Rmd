@@ -116,7 +116,8 @@ sample_lac <- lacunarity(r = sample_rast, plot = TRUE)
 
 To compute Lacunarity for a larger study, it can be computed for all raster objects (ending with .tif) in a folder. Furthermore, individual and summary plots can be automatically created, too.
 ```{r eval = FALSE}
-lacunarity(r = "folder_path_with_TIF_files", save_plot = "folder_path_to_save_plots")
+lacunarity(r = "folder_path_with_TIF_files",
+           save_plot = "folder_path_to_save_plots")
 ```
 
 ## About

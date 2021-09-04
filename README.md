@@ -186,7 +186,8 @@ raster objects (ending with .tif) in a folder. Furthermore, individual
 and summary plots can be automatically created, too.
 
 ``` r
-lacunarity(r = "folder_path_with_TIF_files", save_plot = "folder_path_to_save_plots")
+lacunarity(r = "folder_path_with_TIF_files",
+           save_plot = "folder_path_to_save_plots")
 ```
 
 ## About
