@@ -240,7 +240,8 @@ lacunarity <- function(x, box = "SQUARE", r_vec = NULL, r_max = NULL, plot = FAL
   }
   
   
-  # Plot output of all r
+
+# Plot --------------------------------------------------------------------
   if (plot) {
     if (length(unique(out$name)) != length(unique(out$i))) {
       x_names <- as.character(out$i)
@@ -273,8 +274,8 @@ lacunarity <- function(x, box = "SQUARE", r_vec = NULL, r_max = NULL, plot = FAL
     print(p)
   }
   
-  
-  # Save plots and table of out
+
+# save_plot ---------------------------------------------------------------
   if (is.character(save_plot)) {
     # Save out as CSV
     write.csv(out, file = file.path(temp_path, "Lacunarity.csv"), row.names = FALSE)
