@@ -4,6 +4,8 @@
 # spatLac: Spatial Lacunarity
 
 <!-- badges: start -->
+
+[![DOI](https://zenodo.org/badge/402763041.svg)](https://zenodo.org/badge/latestdoi/402763041)
 <!-- badges: end -->
 
 The `spatLac` R package helps researchers compute Lacunarity for binary
