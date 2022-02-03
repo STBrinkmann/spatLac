@@ -1,12 +1,7 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 # spatLac: Spatial Lacunarity
 
-<!-- badges: start -->
-
 [![DOI](https://zenodo.org/badge/402763041.svg)](https://zenodo.org/badge/latestdoi/402763041)
-<!-- badges: end -->
 
 The `spatLac` R package helps researchers compute Lacunarity for binary
 and continuous Spatial Raster objects. `spatLac` uses fast C++ code,
@@ -211,20 +206,18 @@ Run this command to get info on how to cite this package.
 ``` r
 citation("spatLac")
 #> 
-#> To cite package 'spatLac' in publications use:
+#> To cite spatLac in publications use:
 #> 
-#>   Sebastian Brinkmann (2021). spatLac: R package for computing
-#>   Lacunarity for Spatial Raster. R package version 1.0.
-#>   https://github.com/STBrinkmann/spatLac
+#>   Brinkmann, S.T. (2021). spatLac: R package for computing Lacunarity
+#>   for Spatial Raster. doi: 10.5281/zenodo.5786547.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
 #>     title = {spatLac: R package for computing Lacunarity for Spatial Raster},
-#>     author = {Sebastian Brinkmann},
+#>     author = {Brinkmann S.T.},
 #>     year = {2021},
-#>     note = {R package version 1.0},
-#>     url = {https://github.com/STBrinkmann/spatLac},
+#>     url = {https://doi.org/10.5281/zenodo.5786547},
 #>   }
 ```
 
