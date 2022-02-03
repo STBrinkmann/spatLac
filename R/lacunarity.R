@@ -3,7 +3,6 @@
 #'
 #' @param x SpatRaster or list of SpatRaster OR character; Raster image that can be loaded using \code{\link[terra]{rast}}.
 #' x can also be character, refering to a folder. In that case all files in the folder with the ending ".tif" will be used
-#' @param box character; Either SQUARE for a square neighborhood window, or CIRCLE for a round neighborhood window
 #' @param r_vec integer vector (optional); Vector of box diameter values. Every r must be odd and >2. It is recommended
 #' that no r value is greated than half of the shorter dimension of x. If r_vec is NULL (default), r_vec will be generated automatically
 #' @param r_max integer (optional); Maximum value of r, r_vec will be cut off for values >r
@@ -62,7 +61,7 @@
 #' @importFrom ggplot2 ggsave
 #' @importFrom magrittr %>%
 #' @useDynLib spatLac, .registration = TRUE
-lacunarity <- function(x, box = "SQUARE", r_vec = NULL, r_max = NULL, plot = FALSE, save_plot = FALSE, progress = FALSE, ncores = 1L) {
+lacunarity <- function(x, r_vec = NULL, r_max = NULL, plot = FALSE, save_plot = FALSE, progress = FALSE, ncores = 1L, test = FALSE) {
   
   # 1. Check input ----------------------------------------------------------
   # x
@@ -104,17 +103,6 @@ lacunarity <- function(x, box = "SQUARE", r_vec = NULL, r_max = NULL, plot = FAL
     if (class(x) != "SpatRaster") {
       stop("x must  be a SpatRaster object. Make sure to use the terra package for loading raster images")
     }
-  }
-  
-  #box
-  if (!is.character(box)) {
-    stop("box must be character")
-  } else if (toupper(box) == "SQUARE") {
-    box <- 1
-  } else if (toupper(box) == "CIRCLE") {
-    box <- 2
-  } else {
-    stop("box must be either SQUARE or CIRCLE")
   }
   
   # r_vec
@@ -209,6 +197,8 @@ lacunarity <- function(x, box = "SQUARE", r_vec = NULL, r_max = NULL, plot = FAL
       r_vec <- r_vec[r_vec<=r_max]
     }
     
+    r_vec <- unique(as.integer(r_vec))
+    
     # Is r binary? (e.g. Greenspace raster)
     lac_fun <- as.integer(nrow(terra::unique(this_x)) <= 2)
     
@@ -216,12 +206,12 @@ lacunarity <- function(x, box = "SQUARE", r_vec = NULL, r_max = NULL, plot = FAL
     rast_mat <- terra::as.matrix(this_x, wide = TRUE)
     
     # Calculate Lacunarity for all w
-    this_lac <- rcpp_lacunarity(mat = rast_mat,
-                                w_vec = r_vec,
-                                fun = lac_fun,
-                                mode = box,
-                                ncores = ncores,
-                                display_progress = progress)
+    this_lac <- rcpp_lacunarity2(mat = rast_mat,
+                                 r_vec = r_vec,
+                                 fun = lac_fun,
+                                 ncores = ncores,
+                                 display_progress = progress)
+    
     
     this_out <- dplyr::tibble(
       name = rep(names(this_x)[1], length(this_lac)),
@@ -238,7 +228,6 @@ lacunarity <- function(x, box = "SQUARE", r_vec = NULL, r_max = NULL, plot = FAL
     
     if(progress) cat("\n")
   }
-  
   
 
 # Plot --------------------------------------------------------------------

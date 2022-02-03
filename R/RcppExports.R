@@ -5,3 +5,7 @@ rcpp_lacunarity <- function(mat, w_vec, fun, mode, ncores = 1L, display_progress
     .Call(`_spatLac_rcpp_lacunarity`, mat, w_vec, fun, mode, ncores, display_progress)
 }
 
+rcpp_lacunarity2 <- function(mat, r_vec, fun, ncores = 1L, display_progress = FALSE) {
+    .Call(`_spatLac_rcpp_lacunarity2`, mat, r_vec, fun, ncores, display_progress)
+}
+

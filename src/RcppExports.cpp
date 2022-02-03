@@ -26,9 +26,25 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// rcpp_lacunarity2
+NumericVector rcpp_lacunarity2(const NumericMatrix& mat, const IntegerVector& r_vec, const int fun, const int ncores, const bool display_progress);
+RcppExport SEXP _spatLac_rcpp_lacunarity2(SEXP matSEXP, SEXP r_vecSEXP, SEXP funSEXP, SEXP ncoresSEXP, SEXP display_progressSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type mat(matSEXP);
+    Rcpp::traits::input_parameter< const IntegerVector& >::type r_vec(r_vecSEXP);
+    Rcpp::traits::input_parameter< const int >::type fun(funSEXP);
+    Rcpp::traits::input_parameter< const int >::type ncores(ncoresSEXP);
+    Rcpp::traits::input_parameter< const bool >::type display_progress(display_progressSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcpp_lacunarity2(mat, r_vec, fun, ncores, display_progress));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_spatLac_rcpp_lacunarity", (DL_FUNC) &_spatLac_rcpp_lacunarity, 6},
+    {"_spatLac_rcpp_lacunarity2", (DL_FUNC) &_spatLac_rcpp_lacunarity2, 5},
     {NULL, NULL, 0}
 };
 
