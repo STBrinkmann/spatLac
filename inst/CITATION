@@ -1,0 +1,12 @@
+citHeader("To cite spatLac in publications use:")
+
+citEntry(
+  entry    = "Manual",
+  title    = "spatLac: R package for computing Lacunarity for Spatial Raster",
+  author   = "Brinkmann S.T.",
+  year     = "2021",
+  url      = "https://doi.org/10.5281/zenodo.5786547",
+  textVersion = paste(
+    "Brinkmann, S.T. (2021). spatLac: R package for computing Lacunarity for Spatial Raster. doi: 10.5281/zenodo.5786547."
+  )
+)
