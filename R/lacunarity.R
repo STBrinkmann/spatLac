@@ -238,8 +238,36 @@ lacunarity <- function(x, r_vec = NULL, r_max = NULL, plot = FALSE, save_plot = 
       x_names <- as.character(out$name)
     }
     
-    max_x <- ceiling(max(out$`ln(r)`, na.rm = TRUE))
-    max_y <- round(max(out$`ln(Lac)`, na.rm = TRUE), 1)+0.1
+    #max_x <- ceiling(max(out$`ln(r)`, na.rm = TRUE))
+    #max_y <- round(max(out$`ln(Lac)`, na.rm = TRUE), 1)+0.1
+    
+    out_na_rm <- na.omit(out)
+    max_x <- NA
+    max_y <- NA
+    
+    for (i in 1:nrow(out_na_rm)) {
+      r_sort <- sort(out_na_rm$`ln(r)`, decreasing = TRUE)
+      lac_sort <- sort(out_na_rm$`ln(Lac)`, decreasing = TRUE)
+      
+      if(is.na(max_x) && is.finite(r_sort[i])){
+        if(i > 1){
+          warning("Plot may be false due to infinte values. Please double check with the output table")
+        }
+        max_x <- ceiling(r_sort[i])
+      }
+      
+      if(is.na(max_y) && is.finite(lac_sort[i])){
+        if(i > 1){
+          warning("Plot may be false due to infinte values. Please double check with the output table")
+        }
+        max_y <- round(lac_sort[i], 1) + 0.1
+      }
+    }
+    
+    if(is.na(max_y) || is.na(max_x)) {
+      warning("Plot can't be created. Please look into the output table")
+      break
+    }
     
     p <- ggplot2::ggplot(data = out,
                          mapping = ggplot2::aes(x = `ln(r)`,
@@ -276,8 +304,36 @@ lacunarity <- function(x, r_vec = NULL, r_max = NULL, plot = FALSE, save_plot = 
       x_names <- as.character(out$name)
     }
     
-    max_x <- ceiling(max(out$`ln(r)`, na.rm = TRUE))
-    max_y <- round(max(out$`ln(Lac)`, na.rm = TRUE), 1)+0.1
+    #max_x <- ceiling(max(out$`ln(r)`, na.rm = TRUE))
+    #max_y <- round(max(out$`ln(Lac)`, na.rm = TRUE), 1)+0.1
+    
+    out_na_rm <- na.omit(out)
+    max_x <- NA
+    max_y <- NA
+    
+    for (i in 1:nrow(out_na_rm)) {
+      r_sort <- sort(out_na_rm$`ln(r)`, decreasing = TRUE)
+      lac_sort <- sort(out_na_rm$`ln(Lac)`, decreasing = TRUE)
+      
+      if(is.na(max_x) && is.finite(r_sort[i])){
+        if(i > 1){
+          warning("Plot may be false due to infinte values. Please double check with the output table")
+        }
+        max_x <- ceiling(r_sort[i])
+      }
+      
+      if(is.na(max_y) && is.finite(lac_sort[i])){
+        if(i > 1){
+          warning("Plot may be false due to infinte values. Please double check with the output table")
+        }
+        max_y <- round(lac_sort[i], 1) + 0.1
+      }
+    }
+    
+    if(is.na(max_y) || is.na(max_x)) {
+      warning("Plot can't be created. Please look into the output table")
+      break
+    }
     
     p <- ggplot2::ggplot(data = out,
                          mapping = ggplot2::aes(x = `ln(r)`,
@@ -313,8 +369,36 @@ lacunarity <- function(x, r_vec = NULL, r_max = NULL, plot = FALSE, save_plot = 
           x_names <- as.character(this_out$name)
         }
         
-        max_x <- ceiling(max(this_out$`ln(r)`, na.rm = TRUE))
-        max_y <- ceiling(max(this_out$`ln(Lac)`, na.rm = TRUE))
+        #max_x <- ceiling(max(this_out$`ln(r)`, na.rm = TRUE))
+        #max_y <- round(max(this_out$`ln(Lac)`, na.rm = TRUE), 1)+0.1
+        
+        out_na_rm <- na.omit(this_out)
+        max_x <- NA
+        max_y <- NA
+        
+        for (i in 1:nrow(out_na_rm)) {
+          r_sort <- sort(out_na_rm$`ln(r)`, decreasing = TRUE)
+          lac_sort <- sort(out_na_rm$`ln(Lac)`, decreasing = TRUE)
+          
+          if(is.na(max_x) && is.finite(r_sort[i])){
+            if(i > 1){
+              warning("Plot may be false due to infinte values. Please double check with the output table")
+            }
+            max_x <- ceiling(r_sort[i])
+          }
+          
+          if(is.na(max_y) && is.finite(lac_sort[i])){
+            if(i > 1){
+              warning("Plot may be false due to infinte values. Please double check with the output table")
+            }
+            max_y <- round(lac_sort[i], 1) + 0.1
+          }
+        }
+        
+        if(is.na(max_y) || is.na(max_x)) {
+          warning("Plot can't be created. Please look into the output table")
+          break
+        }
         
         p <- ggplot2::ggplot(data = this_out,
                              mapping = ggplot2::aes(x = `ln(r)`,
